@@ -17,15 +17,18 @@ def list_models(return_list=False):
     """List models and their info."""
     global MODELS
     print("Models:", len(MODELS))
-    for k in MODELS:
-        v = MODELS[k]
-        print(f"- {k}:\n{v['info']}")
-    if return_list: return list(MODELS.keys())
+    if return_list:
+        return list(MODELS.keys())
+    else:
+        for k in MODELS:
+            v = MODELS[k]
+            print(f"- {k}:\n{v['info']}")
 
 def download_models(models=[], output=".", force=False):
     """Download models."""
     global MODELS
     print(f"Downloading {len(models)} models.")
+    if isinstance(models, str): models = [models]
     for i, model in enumerate(models):
         print(f"\t{i} - downloading '{model}' ...", end=" ")
         if force or not (Path(output)/model).exists():
@@ -34,7 +37,7 @@ def download_models(models=[], output=".", force=False):
         else:
             print("skipped")
 
-def add_model()
+def add_model(func):
     """Register a model."""
     global MODELS
     model_name = func.__name__
@@ -62,7 +65,7 @@ def vqgan_imagenet_f16_1024(output_folder):
     ckpt_file = 'https://heibox.uni-heidelberg.de/d/8088892a516d4e3baf92/files/?p=%2Fckpts%2Flast.ckpt&dl=1'
     output_yaml_file = Path(output_folder)/ f"{filename}.yaml"
     output_ckpt_file = Path(output_folder)/ f"{filename}.ckpt"
-    os.makedirs(Path(output_folder))
+    os.makedirs(Path(output_folder), exist_ok=True)
     return (__download(yaml_file, output_yaml_file), __download(ckpt_file, output_ckpt_file))
 
 
@@ -77,7 +80,7 @@ def vqgan_imagenet_f16_16384(output_folder):
     ckpt_file = 'https://heibox.uni-heidelberg.de/d/a7530b09fed84f80a887/files/?p=%2Fckpts%2Flast.ckpt&dl=1'
     output_yaml_file = Path(output_folder)/ f"{filename}.yaml"
     output_ckpt_file = Path(output_folder)/ f"{filename}.ckpt"
-    os.makedirs(Path(output_folder))
+    os.makedirs(Path(output_folder), exist_ok=True)
     return (__download(yaml_file, output_yaml_file), __download(ckpt_file, output_ckpt_file))
 
 @add_model
@@ -91,7 +94,7 @@ def coco(output_folder):
     ckpt_file = 'https://dl.nmkd.de/ai/clip/coco/coco.ckpt'
     output_yaml_file = Path(output_folder)/ f"{filename}.yaml"
     output_ckpt_file = Path(output_folder)/ f"{filename}.ckpt"
-    os.makedirs(Path(output_folder))
+    os.makedirs(Path(output_folder), exist_ok=True)
     return (__download(yaml_file, output_yaml_file), __download(ckpt_file, output_ckpt_file))
 
 @add_model
@@ -105,7 +108,7 @@ def faceshq(output_folder):
     ckpt_file = 'https://app.koofr.net/content/links/a04deec9-0c59-4673-8b37-3d696fe63a5d/files/get/last.ckpt?path=%2F2020-11-13T21-41-45_faceshq_transformer%2Fcheckpoints%2Flast.ckpt'
     output_yaml_file = Path(output_folder)/ f"{filename}.yaml"
     output_ckpt_file = Path(output_folder)/ f"{filename}.ckpt"
-    os.makedirs(Path(output_folder))
+    os.makedirs(Path(output_folder), exist_ok=True)
     return (__download(yaml_file, output_yaml_file), __download(ckpt_file, output_ckpt_file))
 
 @add_model
@@ -119,7 +122,7 @@ def faceshq(output_folder):
     ckpt_file = 'https://app.koofr.net/content/links/a04deec9-0c59-4673-8b37-3d696fe63a5d/files/get/last.ckpt?path=%2F2020-11-13T21-41-45_faceshq_transformer%2Fcheckpoints%2Flast.ckpt'
     output_yaml_file = Path(output_folder)/ f"{filename}.yaml"
     output_ckpt_file = Path(output_folder)/ f"{filename}.ckpt"
-    os.makedirs(Path(output_folder))
+    os.makedirs(Path(output_folder), exist_ok=True)
     return (__download(yaml_file, output_yaml_file), __download(ckpt_file, output_ckpt_file))
 
 @add_model
@@ -133,7 +136,7 @@ def wikiart(output_folder):
     ckpt_file = 'http://dl.nmkd.de/ai/clip/wikiart-vqgan/WikiArt_augmented_Steps_7mil_finetuned_1mil.ckpt'
     output_yaml_file = Path(output_folder)/ f"{filename}.yaml"
     output_ckpt_file = Path(output_folder)/ f"{filename}.ckpt"
-    os.makedirs(Path(output_folder))
+    os.makedirs(Path(output_folder), exist_ok=True)
     return (__download(yaml_file, output_yaml_file), __download(ckpt_file, output_ckpt_file))
 
 @add_model
@@ -147,7 +150,7 @@ def sflckr(output_folder):
     ckpt_file = 'https://heibox.uni-heidelberg.de/d/73487ab6e5314cb5adba/files/?p=%2Fcheckpoints%2Flast.ckpt&dl=1'
     output_yaml_file = Path(output_folder)/ f"{filename}.yaml"
     output_ckpt_file = Path(output_folder)/ f"{filename}.ckpt"
-    os.makedirs(Path(output_folder))
+    os.makedirs(Path(output_folder), exist_ok=True)
     return (__download(yaml_file, output_yaml_file), __download(ckpt_file, output_ckpt_file))
 
 if __name__ == "__main__":
@@ -156,7 +159,7 @@ if __name__ == "__main__":
     ap.add_argument('-o', '--output', type=str,
                             help="Output folder.", default=".")
     gp = ap.add_mutually_exclusive_group(required=True)
-    gp.add_argument('-m', '--models', nargs="+", type=str)
+    gp.add_argument('-m', '--models', nargs="+", type=str, choices=list(MODELS.keys()))
     gp.add_argument('--ls', dest='list_models', action='store_true',
                             help="List available models.")
     gp.add_argument('--all', dest='download_all', action='store_true',

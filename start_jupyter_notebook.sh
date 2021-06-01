@@ -1,3 +1,3 @@
 #!/bin/bash
-
-jupyter notebook --allow-root
+cd ..
+jupyter notebook --allow-root --ip='*' --NotebookApp.token='' --NotebookApp.password=''

@@ -8,11 +8,11 @@ from tqdm import tqdm
 from tqdm.notebook import tqdm as tqdm_notebook
 from base64 import b64encode
 import imageio
-from IPython.core.display import display, HTML
+from IPython.core.display import display, HTML, Image as DImage
 #import wandb as wandb TODO: add Weight and Biases
 import datetime
 __utils__ = [
-    "os", "sys", "Path", "tqdm", "tqdm_notebook", "display", "HTML",
+    "os", "sys", "Path", "tqdm", "tqdm_notebook", "display", "HTML", "DImage",
     "datetime", "imageio", "b64encode", "warnings", "math"
 ]
 
@@ -73,6 +73,7 @@ __all__ = [
     "reset_kernel" 
 ]
 __all__ += __utils__
+__all__ += __cpu_all__
 __all__ += __gpu_all__
 __all__ += __dist_all__
 __all__ += __vqgan_clip__
