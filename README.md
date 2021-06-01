@@ -2,6 +2,9 @@
 Docker for VQGAN+CLIP (z+quantize method)
 
 # A. Run Container
+
+Replace `<models absolute path>` and `<outputs absolute path>` with paths from your host machine.
+
 ```bash
 HOST_MODELS="<models absolute path>"
 HOST_OUTPUT="<outputs absolute path>"
