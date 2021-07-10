@@ -5,7 +5,7 @@ RUN git clone https://github.com/openai/CLIP
 RUN git clone https://github.com/CompVis/taming-transformers
 RUN pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio===0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 RUN pip install ftfy regex tqdm omegaconf pytorch-lightning 
-RUN pip install imageio imageio-ffmpeg pandas seaborn kornia einops
+RUN pip install imageio imageio-ffmpeg pandas seaborn kornia einops==0.3.0 transformers==4.3.1
 RUN apt install -y task-spooler
 RUN git clone https://github.com/sborquez/VQGAN_CLIP_docker.git
 RUN chmod u+x VQGAN_CLIP_docker/start_jupyter_notebook.sh
