@@ -13,3 +13,4 @@ RUN chmod u+x VQGAN_CLIP_docker/enqueue_generate_images.sh
 RUN mkdir -p "/root/.cache/torch/hub/checkpoints"
 RUN curl "https://download.pytorch.org/models/vgg16-397923af.pth" -o "/root/.cache/torch/hub/checkpoints/vgg16-397923af.pth"
 WORKDIR "/tf/VQGAN_CLIP_docker"
+ADD VERSION .

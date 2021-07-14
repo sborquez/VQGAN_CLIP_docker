@@ -150,7 +150,7 @@ Replace `<models absolute path>` and `<outputs absolute path>` with your host pa
 ```bash
 git clone "https://github.com/sborquez/VQGAN_CLIP_docker"
 cd VQGAN_CLIP_docker
-sudo docker build sudo docker build . --tag sborquez/vqgan_clip:latest
+sudo docker build . --tag sborquez/vqgan_clip:latest
 HOST_MODELS="<models absolute path>"
 HOST_OUTPUT="<outputs absolute path>"
 HOST_PORT=8888
